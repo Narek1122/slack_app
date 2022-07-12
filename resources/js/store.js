@@ -68,6 +68,14 @@ export default new Vuex.Store({
 
                     ctx.commit('destroyChat', data.id)
                 })
+        },
+
+        logout(ctx, token) {
+            Auth(token)
+            authAxios.post('auth/logout')
+                .then((res) => {
+                    localStorage.removeItem('user_token');
+                })
         }
 
 

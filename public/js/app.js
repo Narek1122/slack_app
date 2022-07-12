@@ -2083,7 +2083,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      name: ''
+    };
+  },
+  methods: {
+    logout: function logout() {
+      this.$store.dispatch('logout', this.getUserToken());
+      this.$router.push({
+        name: "home"
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -2408,47 +2422,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Chat_Chat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Chat/Chat */ "./resources/js/components/User/Chat/Chat.vue");
 /* harmony import */ var _Chat_Room__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Chat/Room */ "./resources/js/components/User/Chat/Room.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2835,6 +2808,12 @@ function Auth(token) {
       Auth(data.token);
       authAxios["delete"]('workspace/destroy/' + data.id).then(function (res) {
         ctx.commit('destroyChat', data.id);
+      });
+    },
+    logout: function logout(ctx, token) {
+      Auth(token);
+      authAxios.post('auth/logout').then(function (res) {
+        localStorage.removeItem('user_token');
       });
     }
   },
@@ -39380,7 +39359,11 @@ var render = function() {
                       },
                       [_vm._v("Sign Up")]
                     )
-                  : _c("h1", [_vm._v("О, нет 😢")])
+                  : _c(
+                      "button",
+                      { staticClass: "btn", on: { click: _vm.logout } },
+                      [_vm._v("Logout")]
+                    )
               ],
               1
             )

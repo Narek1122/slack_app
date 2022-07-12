@@ -6,7 +6,7 @@
                 <div class="navbar-nav" >
                     <router-link to="/login" class="nav-item nav-link" v-if="!getUserToken()">Login</router-link >
                     <router-link to="/sign_up" class="nav-item nav-link" v-if="!getUserToken()">Sign Up</router-link>
-                    <h1 v-else>О, нет 😢</h1>
+                    <button v-else class="btn" v-on:click="logout">Logout</button>
                 </div>
             </div>
         </nav>
@@ -17,5 +17,17 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        data() {
+            return {
+                name: ''
+            }
+        },
+        methods: {
+            logout(){
+                this.$store.dispatch('logout', this.getUserToken())
+                 this.$router.push({name: "home"})
+            }
+        },
+    }
 </script>
